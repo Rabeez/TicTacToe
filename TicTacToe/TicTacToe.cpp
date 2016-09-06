@@ -20,7 +20,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	{
 		game.drawBoard();				// Draw updated board
 
-		game.makeMove();				// Get move and validate it
+		game.makeMove();				/// Get move and validate it
 
 		if (game.gameStatus() != 0) break;				/// Check win/draw status
 

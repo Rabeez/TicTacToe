@@ -144,12 +144,73 @@ char Game::symbolify(int value)
 // Check if someone has won or if the game is a draw
 int Game::gameStatus()
 {
-	if (this->boardArray[0] == this->currentPlayer && this->boardArray[1] == this->currentPlayer && this->boardArray[2] == this->currentPlayer) return 1;
-	else if (this->boardArray[3] == this->currentPlayer && this->boardArray[4] == this->currentPlayer && this->boardArray[5] == this->currentPlayer) return 1;
-	else if (this->boardArray[6] == this->currentPlayer && this->boardArray[7] == this->currentPlayer && this->boardArray[8] == this->currentPlayer) return 1;
-	//else return 2;
+	int sumR1, sumR2, sumR3, sumC1, sumC2, sumC3, sumD1, sumD2;
+	sumR1 = sumR2 = sumR3 = sumC1 = sumC2 = sumC3 = sumD1 = sumD2 = 0;
 
-	return 0;
+#pragma region "First row sum"
+	sumR1 += (this->boardArray[0] != 0) ? this->boardArray[0] : 0;
+	sumR1 += (this->boardArray[1] != 0) ? this->boardArray[1] : 0;
+	sumR1 += (this->boardArray[2] != 0) ? this->boardArray[2] : 0;
+#pragma endregion
+
+#pragma region "Second row sum"
+	sumR2 += (this->boardArray[3] != 0) ? this->boardArray[3] : 0;
+	sumR2 += (this->boardArray[4] != 0) ? this->boardArray[4] : 0;
+	sumR2 += (this->boardArray[5] != 0) ? this->boardArray[5] : 0;
+#pragma endregion
+
+#pragma region "Third row sum"
+	sumR3 += (this->boardArray[6] != 0) ? this->boardArray[6] : 0;
+	sumR3 += (this->boardArray[7] != 0) ? this->boardArray[7] : 0;
+	sumR3 += (this->boardArray[8] != 0) ? this->boardArray[8] : 0;
+#pragma endregion
+
+#pragma region "First column sum"
+	sumC1 += (this->boardArray[0] != 0) ? this->boardArray[0] : 0;
+	sumC1 += (this->boardArray[3] != 0) ? this->boardArray[3] : 0;
+	sumC1 += (this->boardArray[6] != 0) ? this->boardArray[6] : 0;
+#pragma endregion
+
+#pragma region "Second column sum"
+	sumC2 += (this->boardArray[1] != 0) ? this->boardArray[1] : 0;
+	sumC2 += (this->boardArray[4] != 0) ? this->boardArray[4] : 0;
+	sumC2 += (this->boardArray[7] != 0) ? this->boardArray[7] : 0;
+#pragma endregion
+
+#pragma region "Third column sum"
+	sumC3 += (this->boardArray[2] != 0) ? this->boardArray[2] : 0;
+	sumC3 += (this->boardArray[5] != 0) ? this->boardArray[5] : 0;
+	sumC3 += (this->boardArray[8] != 0) ? this->boardArray[8] : 0;
+#pragma endregion
+
+#pragma region "First diagonal sum"
+	sumD1 += (this->boardArray[0] != 0) ? this->boardArray[0] : 0;
+	sumD1 += (this->boardArray[4] != 0) ? this->boardArray[4] : 0;
+	sumD1 += (this->boardArray[8] != 0) ? this->boardArray[8] : 0;
+#pragma endregion
+
+#pragma region "Second diagonal sum"
+	sumD2 += (this->boardArray[2] != 0) ? this->boardArray[2] : 0;
+	sumD2 += (this->boardArray[4] != 0) ? this->boardArray[4] : 0;
+	sumD2 += (this->boardArray[6] != 0) ? this->boardArray[6] : 0;
+#pragma endregion
+
+	if (sumR1 != 0 && sumR2 != 0 && sumR3 != 0 && 
+		sumC1 != 0 && sumC2 != 0 && sumC3 != 0 && 
+		sumD1 != 0 && sumD2 != 0)
+		if (sumR1 % 3 == 0 || sumR2 % 3 == 0 || sumR3 % 3 == 0 || 
+			sumC1 % 3 == 0 || sumC2 % 3 == 0 || sumC3 % 3 == 0 || 
+			sumD1 % 3 == 0 || sumD2 % 3 == 0) return 1;		// Current player won
+
+
+	int boardSum = 0;
+	for (int i = 0; i < 9; i++)
+	{
+		boardSum += this->boardArray[i];
+	}
+	if (boardSum > 9) return 2;		// Draw
+
+	return 0;		// Game not over
 }
 
 // Display end game message
