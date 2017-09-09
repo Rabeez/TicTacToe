@@ -1,4 +1,4 @@
-# TicTacToe
+# TicTacToe (WIP)
 C++ Tic Tac Toe game with AI component
 
 ## Description
